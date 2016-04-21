@@ -19,14 +19,17 @@ The **driver** code decides on new parameters to try and adds these to the datab
 
 ### Running on a single-computer
 Start the MongoDB database daemon:
+
     mkdir ./dbdata/
     mongod --dbpath ./dbdata --port 27017
     # alternatively (Linux): sudo service mongod sart
 
 Start the driver code (creates jobs and writes experiment-definition file):
+
     python ./driver.py
 
 Start the worker code from the same directory (reads experiment-definition file):
+
     python ./slave.py 
 
 **NB:** there are several command-line parameters for slave.py. These are described with the help switch:
@@ -50,6 +53,7 @@ Clone this repository and use setup.py:
 
 ### Manual install
 Those wishing to make modifications to this library will want to conduct a manual install by cloning this repository and updating the PYTHONPATH environment variable (Linux and MacOSX).
+
     git clone https://github.com/erlendd/optomatic.git
     echo "export PYTHONPATH=$PYTHONPATH:$(pwd)/optomatic" >> ~/.bashrc
 
