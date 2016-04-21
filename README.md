@@ -9,7 +9,7 @@ Optomatic is developed with the following objectives:
 
 Optomatic is not intended as a set-it-and-leave-it tool for auto-machine-learning, although it could be used as one. 
 
-## Comparison with existing tools
+### Comparison with existing tools
 Before writing optomatic I used the excellent [hyperopt](https://github.com/hyperopt/hyperopt) package, which motivated many of the design decisions I took. In particular the use of MongoDB as both a scheduler and as a central datastore for the hyperparameter searches. Unfortunately hyperopt is not longer actively maintained, and there are a number of open issues that may be limiting depending on your level of use. For me the most serious issue is that categorical hyperparamters are converted to integer values before being stored (see [here](https://github.com/hyperopt/hyperopt/issues/243), which can cause difficulties if you want to extend an existing parameter-sweep to include more categories (it can be done if you're careful about the order). 
 
 # Usage
@@ -17,12 +17,12 @@ To use optomatic you need to make a very short **driver** code (responsible for 
 
 The **driver** code decides on new parameters to try and adds these to the database, new parameters are suggested using a generator (you can use ParameterGrid or ParameterSampler from scikit-learn). The **worker** connects to the database to find a new set of parameters to try, computes the corresponding score and updates the database with the results. 
 
-### Running on a single-computer
+#### Running on a single-computer
 Start the MongoDB database daemon:
 
     mkdir ./dbdata/
     mongod --dbpath ./dbdata --port 27017
-    # alternatively (Linux): sudo service mongod sart
+    # alternatively (Linux): sudo service mongod start
 
 Start the driver code (creates jobs and writes experiment-definition file):
 
