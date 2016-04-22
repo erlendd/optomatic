@@ -9,15 +9,17 @@ Optomatic is developed with the following objectives:
 
 Optomatic is not intended as a set-it-and-leave-it tool for auto-machine-learning, although it could be used as one. 
 
-### Comparison with existing tools
-Before writing optomatic I used the excellent [hyperopt](https://github.com/hyperopt/hyperopt) package, which motivated many of the design decisions I took. In particular the use of MongoDB as both a scheduler and as a central datastore for the hyperparameter searches. Unfortunately hyperopt is not longer actively maintained, and there are a number of open issues that may be limiting depending on your level of use. For me the most serious issue is that categorical hyperparamters are converted to integer values before being stored (see [here](https://github.com/hyperopt/hyperopt/issues/243), which can cause difficulties if you want to extend an existing parameter-sweep to include more categories (it can be done if you're careful about the order). 
+#### Comparison with existing tools
+Many of the design decisions taken in the development of optomatic were influenced by the excellent [hyperopt](https://github.com/hyperopt/hyperopt) and [optunity](https://github.com/claesenm/optunity) Python packages. In particular the use of MongoDB, both as a scheduler and as a central datastore for the parameter searches came from hyperopt. Unfortunately hyperopt is no longer maintained, and it has not been officially updated to support MongoDB version 3. Optunity supports a wide variety of different optimizers, but currently only natively supports continuous real-valued parameters and doesn't feature a distributed running mode.
+
+Optomatic currently supports grid search and random searches, using ParameterGrid and ParameterSampler from scikit-learn (within optomatic these are called parameter generators). New generators can written by following their structure.
 
 # Usage
 To use optomatic you need to make a very short **driver** code (responsible for deciding which parameters to try) and you need to define a **scoring** function (which computes the metric to optimize, e.g. log-loss, squared-loss). There are examples of both in the examples/ directory.
 
 The **driver** code decides on new parameters to try and adds these to the database, new parameters are suggested using a generator (you can use ParameterGrid or ParameterSampler from scikit-learn). The **worker** connects to the database to find a new set of parameters to try, computes the corresponding score and updates the database with the results. 
 
-#### Running on a single-computer
+#### Running on a single computer
 Start the MongoDB database daemon:
 
     mkdir ./dbdata/
@@ -46,12 +48,12 @@ Optomatic has the following dependencies:
 * pymongo
 These can usually be installed easily using pip. For most users the quick installation below is appropriate.
 
-### Quick install
+#### Quick install
 Clone this repository and use setup.py:
     git clone https://github.com/erlendd/optomatic.git
     sudo python setup.py install
 
-### Manual install
+#### Manual install
 Those wishing to make modifications to this library will want to conduct a manual install by cloning this repository and updating the PYTHONPATH environment variable (Linux and MacOSX).
 
     git clone https://github.com/erlendd/optomatic.git
