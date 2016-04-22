@@ -12,12 +12,10 @@ Many of the design decisions taken in the development of optomatic were influenc
 
 Optomatic divides the problem of hyperparameter searching into two parts:
 
-1. a parametr generator, which suggests new parameters to try
+1. a parametr generator, which suggests new parameters to try,
 2. an optional parameter filter, that takes these suggested parameters and filters out (discards) some according to a rule.
 
-
-
-Optomatic currently supports grid search and random searches, using ParameterGrid and ParameterSampler from scikit-learn (within optomatic these are called parameter generators). It is simple to write a new generator by using these are examples. Optomatic 
+Currently you can use ParameterSampler or ParameterGrid (from scikit-learn) as generators. There are two filters available: NonRepeatingFilter and GBFilter. 
 
 # Usage
 To use optomatic you need to make a very short **driver** code (responsible for deciding which parameters to try) and you need to define a **scoring** function (which computes the metric to optimize, e.g. log-loss, squared-loss). There are examples of both in the examples/ directory.
