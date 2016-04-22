@@ -50,6 +50,7 @@ These can usually be installed easily using pip. For most users the quick instal
 
 #### Quick install
 Clone this repository and use setup.py:
+
     git clone https://github.com/erlendd/optomatic.git
     sudo python setup.py install
 
