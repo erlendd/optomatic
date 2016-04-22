@@ -11,6 +11,7 @@ Optomatic is developed with the following objectives:
 Many of the design decisions taken in the development of optomatic were influenced by the excellent [hyperopt](https://github.com/hyperopt/hyperopt) and [optunity](https://github.com/claesenm/optunity) Python packages. In particular the use of MongoDB, both as a scheduler and as a central datastore for the parameter searches came from hyperopt. Unfortunately hyperopt is no longer maintained, and it has not been officially updated to support MongoDB version 3. Optunity supports a wide variety of different optimizers, but currently only natively supports continuous real-valued parameters and doesn't feature a distributed running mode.
 
 Optomatic divides the problem of hyperparameter searching into two parts:
+
 1. a parametr generator, which suggests new parameters to try
 2. an optional parameter filter, that takes these suggested parameters and filters out (discards) some according to a rule.
 
