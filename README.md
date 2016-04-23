@@ -23,9 +23,9 @@ There are also two filters available: NonRepeatingFilter, which discard candidat
 Many advanced search methods have a high computational overhead that can offset or even outweigh their benefits when compared with much simpler methods. For this reason, and [several](http://blog.dato.com/how-to-evaluate-machine-learning-models-part-4-hyperparameter-tuning) [others](http://www.jmlr.org/papers/v13/bergstra12a.html), random search is the default optimizer in optomatic. 
 
 # Usage
-To use optomatic you need to make a very short **driver** code (responsible for deciding which parameters to try) and you need to define a **scoring** function (which computes the metric to optimize, e.g. log-loss or squared-loss). There are examples of both in the examples/ directory.
+To use optomatic you need to make a very short **driver** code (responsible for deciding which parameters to try) and you need to define a **scoring** (or objective) function, which computes the metric to optimize (e.g. log-loss or squared-loss). There are examples of both in the examples/ directory.
 
-The **driver** code decides on new parameters to try and adds these to the database, new parameters are suggested using a generator (and an optional filter). The **worker** connects to the database to find a new set of parameters to try, computes the corresponding score and updates the database with the results. 
+The **driver** code decides on new parameters to try and adds these to the database, new parameters are suggested using a generator (and an optional filter). A **worker** connects to the database to find a new set of parameters to try, computes the corresponding score and updates the database with the results. 
 
 #### Running on a single computer
 Start the MongoDB database daemon:
