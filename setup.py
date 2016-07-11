@@ -9,5 +9,5 @@ setup(name='optomatic',
       author_email='erlend.davidson@gmail.com',
       url='https://github.com/erlendd/optomatic',
       license='MIT',
-      install_requires=['numpy', 'scipy', 'pandas', 'scikit-learn', 'pymongo'],
+      install_requires=['numpy', 'scipy', 'pandas', 'scikit-learn', 'pymongo', 'seaborn>0.4.0'],
       packages=find_packages())
