@@ -83,6 +83,8 @@ class Plotting:
             loss_log.append(best_loss)
         
         sns.plt.plot(loss_log)
+        sns.plt.xlabel('Trial')
+        sns.plt.ylabel('Loss')
         sns.plt.savefig( self.mkfilename('loss_vs_time') )
         sns.plt.close()
 
