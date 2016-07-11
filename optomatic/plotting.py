@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from scipy.stats.stats import pearsonr
-from jobs import JobsDB
+from .jobs import JobsDB
 import matplotlib
 matplotlib.use('Agg')
 import seaborn as sns; sns.set()
@@ -156,5 +156,3 @@ class Plotting:
 
         sns.plt.savefig( self.mkfilename(plot_filename) )
         sns.plt.close()
-
-

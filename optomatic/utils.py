@@ -1,7 +1,7 @@
 import yaml
 
 
-def yload(fpath):
+def yread(fpath):
     with open(fpath, 'r') as f:
         dat = yaml.load(f)
     return dat
