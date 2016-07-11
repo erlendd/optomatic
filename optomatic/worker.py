@@ -1,4 +1,3 @@
-from sklearn.cross_validation import cross_val_score
 import numpy as np
 import time
 from jobs import JobsDB
