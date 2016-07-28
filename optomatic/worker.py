@@ -25,8 +25,8 @@ class Worker:
             # we will exit to let the next one run.
             self.n_trials = self.jobsDB.get_queued_jobs().count()
 
-        if 'clf_params' not in signature(objective).parameters:
-            print('objective function must has clf_params signature')
+        if 'params' not in signature(objective).parameters:
+            print('objective function must has params signature')
             raise ValueError
         else:
             self.objective = objective
@@ -61,7 +61,7 @@ class Worker:
 
     def compute(self, **kwargs):
         job = self.get_next_params()
-        clf_params = job['params']
+        params = job['params']
         res, aux_data = self.objective(params=params, **kwargs)
         # logger.debug("scores from objective: {}".format(scores))
         
