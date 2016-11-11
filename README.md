@@ -1,3 +1,6 @@
+![Contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg)
+[![License](https://img.shields.io/badge/license-MIT%20License-brightgreen.svg)](https://opensource.org/licenses/MIT)
+
 # About optomatic
 Optomatic is a Python library to aid hyperparameter searches for general machine-learning models. The goal of optomatic is to provide a tool that helps developers find good hyperparameters for their models in a reasonable time, and to store the stages of their hyperparameter searches in a reproducible (and defensible) way.
 
