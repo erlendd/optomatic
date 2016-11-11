@@ -1,14 +1,23 @@
 from sklearn.cross_validation import cross_val_score
 import numpy as np
 import time
-from jobs import JobsDB
+from .jobs import JobsDB
 import logging
+from inspect import getargspec
 logger = logging.getLogger(__name__)
 
 class Worker:
 
-    def __init__(self, project_name, experiment_name, clf, X, y, objective, 
-                   host='localhost', port=27017, check_every=1, loop_forever=True):
+class Worker:
+    def __init__(self,
+                 project_name,
+                 experiment_name,
+                 # clf, X, y,
+                 objective,
+                 host='localhost',
+                 port=27017,
+                 check_every=1,
+                 loop_forever=True):
         self.jobsDB = JobsDB(project_name, experiment_name, host, port)
 
         self.n_trials = -1 # loop-forever
@@ -47,23 +56,17 @@ class Worker:
                 time.sleep(self.check_every)
         return job
 
-    def compute(self):
+    def compute(self, **kwargs):
         job = self.get_next_params()
-        clf_params = job['params']
-        for p in clf_params:
-            # one day, if/when python 3 is ubiquitous, this won't be necessary...
-            if isinstance( clf_params[p], unicode ): 
-                clf_params[p] = str(clf_params[p])
+        params = job['params']
+        for p in params:
+             # one day, if/when python 3 is ubiquitous, this won't be necessary...
+             if isinstance( params[p], unicode ): 
+                 params[p] = str(params[p])
 
-        scores = self.objective(self.clf, clf_params, self.X, self.y)
-        logger.debug("scores from objective: {}".format(scores))
-
-        loss = np.mean(scores)
-        std = np.std(scores)
-
+        res, aux_data = self.objective(params=params, **kwargs)
+        logger.debug("result from objective: {}".format(res))
+        
         # then report these results back in the db...
-        aux_data = {'loss': loss, 'std': std}
-        self.jobsDB.report_job_completion(job['_id'], loss, aux_data=aux_data)
-
-
+        self.jobsDB.report_job_completion(job['_id'], res, aux_data=aux_data)
 
