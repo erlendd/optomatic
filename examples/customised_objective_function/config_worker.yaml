@@ -1,0 +1,9 @@
+MongoDB:
+  host: localhost
+  port: 27017
+experiment_name:
+  rfc: rfc:max_features-n_estimators
+  svc: svc:C-gamma-kernel-probability
+features: '111'
+max_evals: 240
+project_name: example_multi_experiments

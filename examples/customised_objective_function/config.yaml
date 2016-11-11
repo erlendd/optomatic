@@ -1,0 +1,6 @@
+max_evals: 240
+project_name: 'example_multi_experiments'  # same for database name
+MongoDB:
+  host: localhost
+  port: 27017
+features: '111'

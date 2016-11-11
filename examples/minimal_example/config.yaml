@@ -1,0 +1,6 @@
+MongoDB:
+  host: localhost
+  port: 27017
+experiment_name: random_sleep
+project_name: minimal_example
+number_examples: 20
