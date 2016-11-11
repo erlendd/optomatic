@@ -34,19 +34,21 @@ class Plotting:
 
         self.losses = []
         self.param_values = {}
-        for trials in self.completed:
+        for trials in self.completed:  # loop over each result
 
             self.losses.append( trials['loss'] )
             
             for pname in self.param_names:
-                pvalues = trials['params'][pname] # the raw values used for ths param
-                # check if the parameter needs to be labelized to values... 
+                # get the raw value for the parameter this trial
+                pvalue = trials['params'][pname] 
+                # check if the parameter needs to be labelized to values...
                 if self.jobs.param_value_encoder[pname]:
-                    pvalues = self.jobs.param_value_encoder[pname].transform( pvalues )
+                    logging.debug("Parameter '{}' will be labelized".format(pname))
+                    pvalue = self.jobs.param_value_encoder[pname].transform( [pvalue] )[0]
                 # look for key=pname in the param_values dict, if missing initialise
                 # it to and empty list and append the first pvalue. If already present
                 # just append pvalue.
-                self.param_values.setdefault(pname, []).append( pvalues )
+                self.param_values.setdefault(pname, []).append( pvalue )
         
         # # some parameters are words, like 'linear' or 'rbf', we can't
         # # find the correlation coefficient between a word and a loss (float),

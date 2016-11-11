@@ -7,8 +7,6 @@ from inspect import getargspec
 logger = logging.getLogger(__name__)
 
 class Worker:
-
-class Worker:
     def __init__(self,
                  project_name,
                  experiment_name,
@@ -18,7 +16,14 @@ class Worker:
                  port=27017,
                  check_every=1,
                  loop_forever=True):
+        
         self.jobsDB = JobsDB(project_name, experiment_name, host, port)
+
+        if 'params' not in getargspec(objective).args:
+            logging.error("objective function must take 'params' argument!")
+            raise ValueError
+        else:
+            self.objective = objective
 
         self.n_trials = -1 # loop-forever
         if not loop_forever:
@@ -27,23 +32,20 @@ class Worker:
             # we will exit to let the next one run.
             self.n_trials = self.jobsDB.get_queued_jobs().count()
 
-        self.clf = clf # estimator
-        self.X = X # X features
-        self.y = y # y labels
-        self.objective = objective
         self.check_every = check_every # delay in seconds between checking for jobs
 
-    def start_worker(self):
-        if self.n_trials > -1:
-            logging.info('Worker will close after the {} jobs in this experiment.'.format(self.n_trials))
+    def start_worker(self, **kwargs):
+        if self.n_trials > -1: # pre-definied num of trials
+            logging.info('Worker will close after the {} jobs in this experiment.'.format(
+                self.n_trials))
             for i in range(self.n_trials):
-                self.compute()
+                self.compute(**kwargs)
             # print some stats
             self.jobsDB.print_job_stats()
 
-        else:
+        else: # loop-forever
             while True:
-                self.compute()
+                self.compute(**kwargs)
 
     def get_next_params(self):
         job = None
@@ -69,4 +71,5 @@ class Worker:
         
         # then report these results back in the db...
         self.jobsDB.report_job_completion(job['_id'], res, aux_data=aux_data)
+        
 

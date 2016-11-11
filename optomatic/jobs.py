@@ -215,7 +215,7 @@ class JobsDB:
                         self.param_value_encoder[param_name] = LabelEncoder()
 
             if self.param_value_encoder[param_name]:
-                logging.info('Using LabelEncoder on param: {}'.param_name)
+                logging.info('Using LabelEncoder on param: {}'.format(param_name))
                 self.param_value_encoder[param_name].fit( param_space[param_name] )             
 
 
