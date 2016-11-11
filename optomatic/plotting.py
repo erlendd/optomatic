@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from scipy.stats.stats import pearsonr
-from jobs import JobsDB
+from .jobs import JobsDB
 import matplotlib
 matplotlib.use('Agg')
 import seaborn as sns; sns.set()
@@ -24,9 +24,13 @@ class Plotting:
 
         # we'll use the results multiple times, so cache it (TODO: catch OOM)
         self.completed = list(self.jobs.get_completed_jobs())
+        logging.debug('Found {} completed jobs.'.format(len(self.completed)))
+        if len(self.completed) == 0:
+            logging.warning('No completed jobs to plot: make sure you run the worker.py to process some jobs!')
 
         # set up the parameter-names for the plotters...
         self.param_names = self.jobs.get_param_names()
+        logging.debug('Found parameter names: {}.'.format(self.param_names))
 
         self.losses = []
         self.param_values = {}
@@ -81,10 +85,9 @@ class Plotting:
             if trial_loss < best_loss:
                 best_loss = trial_loss
             loss_log.append(best_loss)
-        
-        sns.plt.plot(loss_log)
-        sns.plt.xlabel('Trial')
+        sns.plt.xlabel('Trial')     
         sns.plt.ylabel('Loss')
+        sns.plt.plot(loss_log)
         sns.plt.savefig( self.mkfilename('loss_vs_time') )
         sns.plt.close()
 
@@ -146,7 +149,13 @@ class Plotting:
 
             if self.jobs.param_value_encoder[best_params[0]]: ### !!!
                 label_names = self.jobs.param_value_encoder[best_params[0]].classes_
-                sns.plt.xticks( [0, 1], [label_names[0], label_names[1]] )#self.param_values['kernel'] )
+                ticks = np.arange(0, 1, 1./len(label_names))
+                tick_names = []
+                for idx in range(len(ticks)):
+                    tick_names.append(label_names[idx])
+                #sns.plt.xticks( [0, 1], [label_names[0], label_names[1]] )
+                sns.plt.xticks( ticks, tick_names )
+            
             ax.scatter( self.param_values[best_params[0]], self.losses )
 
         if len(best_params) == 2:
@@ -158,5 +167,3 @@ class Plotting:
 
         sns.plt.savefig( self.mkfilename(plot_filename) )
         sns.plt.close()
-
-
