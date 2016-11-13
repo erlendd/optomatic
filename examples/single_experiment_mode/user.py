@@ -44,15 +44,15 @@ clf_params - dictionary of the current parameters.
 X - features
 y - labels
 '''
-def objective(clf, clf_params, X, y):
-    clf.set_params( **clf_params )
+def objective(clf, params, X, y):
+    clf.set_params( **params )
     scores = cross_val_score( clf,
                               X,
                               y,
-                              scoring='log_loss',
+                              scoring='neg_log_loss',
                               cv=4,
                               n_jobs=-1  )
 
-    # scores will be -ve from log_loss, make +ive...
-    scores = -1 * np.array(scores)
-    return list(scores)
+    # scores will be -ve from neg_log_loss, make +ive...
+    scores = -1 * np.mean(scores)
+    return scores, None
