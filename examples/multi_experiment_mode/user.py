@@ -2,7 +2,6 @@ import numpy as np
 from sklearn.cross_validation import cross_val_score
 from scipy.stats.distributions import *
 from sklearn.ensemble import RandomForestClassifier as RFC
-from sklearn.svm import SVC
 
 '''
 user.py
@@ -30,16 +29,16 @@ See: http://scikit-learn.org/stable/modules/generated/sklearn.grid_search.Parame
 param_space = {}
 param_types = {}
 
-param_space['svc'] = {'C': expon(scale=100), 'gamma': expon(scale=0.1), 'probability': [True], 'kernel': ['linear']}
-param_types['svc'] = {'C': 'real', 'gamma': 'real', 'probability': 'int', 'kernel': 'categorical'}
-
 param_space['rfc'] = {'n_estimators': [100, 200, 300, 400, 500, 600], 'max_features': [1, 2]}
 param_types['rfc'] = {'n_estimators': 'int', 'max_features': 'int'}
+
+param_space['svc'] = {'C': expon(scale=100), 'gamma': expon(scale=0.1)}
+param_types['svc'] = {'C': 'real', 'gamma': 'real'}
 
 '''
 clfs maps string-names to a cloneable clf instance.
 '''
-clfs = {'svc': SVC(), 'rfc': RFC()}
+clfs = {'rfc': RFC(), 'svc': SVC()}
 
 
 '''
@@ -48,15 +47,15 @@ clf_params - dictionary of the current parameters.
 X - features
 y - labels
 '''
-def objective(clf, clf_params, X, y):
-    clf.set_params( **clf_params )
+def objective(clf, params, X, y):
+    clf.set_params( **params )
     scores = cross_val_score( clf,
                               X,
                               y,
-                              scoring='log_loss',
+                              scoring='neg_log_loss',
                               cv=4,
                               n_jobs=-1  )
 
-    # scores will be -ve from log_loss, make +ive...
-    scores = -1 * np.array(scores)
-    return list(scores)
+    # scores will be -ve from neg_log_loss, make +ive...
+    scores = -1 * np.mean(scores)
+    return scores, None
