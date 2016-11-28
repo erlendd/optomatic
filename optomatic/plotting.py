@@ -83,6 +83,7 @@ class Plotting:
         best_loss = np.inf
         loss_log = []
         for trial in self.completed:
+	    logging.debug(" trial['loss']=".format(trial['loss']))
             trial_loss = float( trial['loss'] )
             if trial_loss < best_loss:
                 best_loss = trial_loss
