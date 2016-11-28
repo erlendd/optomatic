@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 def parse_cli():
     parser = argparse.ArgumentParser(
         description='Get new parameters from database and compute their corresponding score.')
-    parser.add_argument('--configure',
+    parser.add_argument('--conf',
                         # default='27017',
                         required=True,
                         help='project configuration file.')
@@ -26,7 +26,7 @@ def parse_cli():
 
 def main():
     args = parse_cli()
-    config = yread(args.configure)
+    config = yread(args.conf)
     for clf, db_collection in config['experiment_name'].items():
         print('\nProcessing {}, experiment name: {}'.format(clf, db_collection))
         p = Plotting(config['project_name'],

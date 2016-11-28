@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.cross_validation import cross_val_score
 from scipy.stats.distributions import *
 from sklearn.ensemble import RandomForestClassifier as RFC
+from sklearn.svm import SVC
 
 '''
 user.py
@@ -32,8 +33,8 @@ param_types = {}
 param_space['rfc'] = {'n_estimators': [100, 200, 300, 400, 500, 600], 'max_features': [1, 2]}
 param_types['rfc'] = {'n_estimators': 'int', 'max_features': 'int'}
 
-param_space['svc'] = {'C': expon(scale=100), 'gamma': expon(scale=0.1)}
-param_types['svc'] = {'C': 'real', 'gamma': 'real'}
+param_space['svc'] = {'C': expon(scale=100), 'gamma': expon(scale=0.1), 'probability': [True]}
+param_types['svc'] = {'C': 'real', 'gamma': 'real', 'probability': 'int'}
 
 '''
 clfs maps string-names to a cloneable clf instance.
