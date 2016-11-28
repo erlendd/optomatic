@@ -7,7 +7,7 @@ import argparse
 def parse_cli():
     parser = argparse.ArgumentParser(
         description='Get new parameters from database and compute their corresponding score.')
-    parser.add_argument('--configure',
+    parser.add_argument('--conf',
                         default='config.yaml',
                         help='project configuration file.')
     parser.add_argument('--batch-mode',
@@ -22,7 +22,7 @@ def parse_cli():
 
 def main():
     args = parse_cli()
-    config = yread(args.configure)
+    config = yread(args.conf)
 
     w = Worker(config['project_name'],
                config['experiment_name'],

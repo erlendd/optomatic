@@ -8,7 +8,7 @@ from user import get_param_space
 def parse_cli():
     parser = argparse.ArgumentParser(
         description='Get new parameters from database and compute their corresponding score.')
-    parser.add_argument('--configure',
+    parser.add_argument('--conf',
                         default='config.yaml',
                         help='project configuration file.')
     return parser.parse_args()
@@ -16,7 +16,7 @@ def parse_cli():
 
 def main():
     args = parse_cli()
-    config = yread(args.configure)
+    config = yread(args.conf)
 
     # sample parameters
     param_space = get_param_space()

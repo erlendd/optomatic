@@ -6,14 +6,14 @@ import argparse
 def parse_cli():
     parser = argparse.ArgumentParser(
              description='Fetches and displays the results from the database.')
-    parser.add_argument('--configure',
+    parser.add_argument('--conf',
                         default='config.yaml',
                         help='project configuration file.')
     return parser.parse_args()
 
 def main():
     args = parse_cli()
-    config = yread(args.configure)
+    config = yread(args.conf)
     # connect to collection
     jobs = JobsDB(config['project_name'],
                   config['experiment_name'],
