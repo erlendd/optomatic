@@ -47,7 +47,7 @@ clfs = {'svc': SVC(), 'rfc': RFC()}
 
 def objective_func(params, clf, X, y):
     '''
-    worker.py take one set of params and 
+    worker.py take one set of params 
     '''
     clf.set_params(**params)
     scores = cross_val_score(clf, X, y, scoring='neg_log_loss', cv=4, n_jobs=-1)

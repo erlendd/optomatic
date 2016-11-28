@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 def parse_cli():
     parser = argparse.ArgumentParser(
         description='Get new parameters from database and compute their corresponding score.')
-    parser.add_argument('--configure',
+    parser.add_argument('--conf',
                         # default='27017',
                         required=True,
                         help='project configuration file.')
@@ -28,7 +28,7 @@ def parse_cli():
 def main():
     args = parse_cli()
 
-    with open(args.configure, 'r') as f:
+    with open(args.conf, 'r') as f:
         config = yaml.load(f)
 
     for clf_name, db_collection in config['experiment_name'].items():
