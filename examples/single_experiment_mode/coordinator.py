@@ -44,5 +44,5 @@ for clf_name in user.clfs:
     # worker.py uses this to find the trials
     ywrite(config, '{}.yaml'.format(experiment_name))
     
-    print "To run these jobs run ./worker.py --configure {}.yaml".format(experiment_name)
+    print "To run these jobs run ./worker.py --conf {}.yaml".format(experiment_name)
 
