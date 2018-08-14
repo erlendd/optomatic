@@ -61,15 +61,11 @@ class Worker:
     def compute(self, **kwargs):
         job = self.get_next_params()
         params = job['params']
-        for p in params:
-             # one day, if/when python 3 is ubiquitous, this won't be necessary...
-             if isinstance( params[p], unicode ): 
-                 params[p] = str(params[p])
 
-        res, aux_data = self.objective(params=params, **kwargs)
+        res = self.objective(params=params, **kwargs)
         logger.debug("result from objective: {}".format(res))
         
         # then report these results back in the db...
-        self.jobsDB.report_job_completion(job['_id'], res, aux_data=aux_data)
+        self.jobsDB.report_job_completion(job['_id'], res, aux_data=None)
         
 

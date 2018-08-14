@@ -65,7 +65,7 @@ class JobsDB:
         self.STATUS_COMPLETED = 2
         self.STATUS_FAILED = 3
 
-        conn = pymongo.MongoClient()
+        conn = pymongo.MongoClient(host, port)
         self.conn = conn
         self.db = conn[project_name]
         self.collection = self.db[experiment_name]
